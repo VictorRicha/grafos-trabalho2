@@ -24,5 +24,10 @@ namespace GrafosLib.Model
             if (Weight > other.Weight) return 1;
             return 0;
         }
+
+        public override string ToString()
+        {
+            return Source + " -> " + Target;
+        }
     }
 }

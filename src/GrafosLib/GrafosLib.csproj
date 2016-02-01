@@ -43,7 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorithms\Dijkstra.cs" />
+    <Compile Include="Algorithms\Prim.cs" />
     <Compile Include="DataStructure\DictionaryOfCollection.cs" />
+    <Compile Include="DataStructure\MinPriorityQueue.cs" />
     <Compile Include="Model\AdjacencyListGraph.cs" />
     <Compile Include="Model\Edge.cs" />
     <Compile Include="Model\IGraph.cs" />
@@ -51,9 +54,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Algorithms\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

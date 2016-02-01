@@ -1,4 +1,5 @@
-﻿using GrafosLib.DataStructure;
+﻿using System.Collections.Generic;
+using GrafosLib.DataStructure;
 
 namespace GrafosLib.Model
 {
@@ -18,11 +19,25 @@ namespace GrafosLib.Model
 
         public void AddEdge(int source, int target, double cost = 1)
         {
-            var e = new Edge(target, source, cost);
-            _vertices.Add(source, e);
+            _vertices.Add(source, new Edge(target, source, cost));
 
             if (!IsDirected)
-                _vertices.Add(target, e);
+                _vertices.Add(target, new Edge(source, target, cost));
+        }
+
+        public IEnumerable<Edge> Edges()
+        {
+            return _vertices.Values;
+        }
+
+        public IEnumerable<Edge> Neighbours(int vertex)
+        {
+            return _vertices[vertex];
+        }
+
+        public IEnumerable<int> Vertices()
+        {
+            return _vertices.Keys;
         }
     }
 }
