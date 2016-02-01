@@ -17,8 +17,8 @@ namespace GrafosLib
                 //     TextReader fin = new StreamReader( args[0] );
                 Console.WriteLine("Choose file");
                 var file = Console.ReadLine();
-                //TextReader fin = new StreamReader($"c:\\Grafos\\grafo_{file}.txt");
-                TextReader fin = new StreamReader($"c:\\Grafos\\rede_colaboracao.txt");
+                TextReader fin = new StreamReader($"c:\\Grafos\\grafo_{file}.txt");
+                //TextReader fin = new StreamReader($"c:\\Grafos\\rede_colaboracao.txt");
                 Console.WriteLine($"Reading file {file}...");
                 var counter = 1;
                 string line;
@@ -59,7 +59,7 @@ namespace GrafosLib
 
             sw.Start();
 
-            // run dijkstra
+            //run dijkstra
             //Console.WriteLine("Run Dijkstra");
 
             //var d = new Dijkstra(g);
@@ -74,6 +74,13 @@ namespace GrafosLib
             //sw.Stop();
 
             //Console.WriteLine($"MST weight: {p.Weight()}");
+
+
+            var avg = new AveragePathLength(g).Run();
+            Console.WriteLine("Average Path Length: {0}", avg);
+            sw.Stop();
+
+
 
             //var d = new Dijkstra(g);
             //d.Run(2722);
@@ -92,27 +99,27 @@ namespace GrafosLib
             //    Console.WriteLine(edge);
             //}
 
-            Console.WriteLine("Run Prim");
-            var p = new Prim(g);
-            sw.Stop();
+            //Console.WriteLine("Run Prim");
+            //var p = new Prim(g);
+            //sw.Stop();
 
-            Console.WriteLine($"MST weight: {p.Weight()}");
-            var mstEdges = p.Edges();
-            var mst = new AdjacencyListGraph(true);
-            foreach (var mstEdge in mstEdges)
-            {
-                mst.AddEdge(mstEdge.Source, mstEdge.Target, mstEdge.Weight);
-            }
-            var degrees = mst.Degrees();
-            var d = degrees.Values.OrderByDescending(a => a).ToList();
-            Console.WriteLine($"Degree 1: {d[0]}");
-            Console.WriteLine($"Degree 2: {d[1]}");
-            Console.WriteLine($"Degree 3: {d[2]}");
+            //Console.WriteLine($"MST weight: {p.Weight()}");
+            //var mstEdges = p.Edges();
+            //var mst = new AdjacencyListGraph(true);
+            //foreach (var mstEdge in mstEdges)
+            //{
+            //    mst.AddEdge(mstEdge.Source, mstEdge.Target, mstEdge.Weight);
+            //}
+            //var degrees = mst.Degrees();
+            //var d = degrees.Values.OrderByDescending(a => a).ToList();
+            //Console.WriteLine($"Degree 1: {d[0]}");
+            //Console.WriteLine($"Degree 2: {d[1]}");
+            //Console.WriteLine($"Degree 3: {d[2]}");
 
-            Console.WriteLine(
-                $"Dijkstra neighbours: {mst.Neighbours(2722).Aggregate("", (current, neighbour) => current + (neighbour + " - "))}");
-            Console.WriteLine(
-                $"Figueiredo neighbours: {mst.Neighbours(343930).Aggregate("", (current, neighbour) => current + (neighbour + " - "))}");
+            //Console.WriteLine(
+            //    $"Dijkstra neighbours: {mst.Neighbours(2722).Aggregate("", (current, neighbour) => current + (neighbour + " - "))}");
+            //Console.WriteLine(
+            //    $"Figueiredo neighbours: {mst.Neighbours(343930).Aggregate("", (current, neighbour) => current + (neighbour + " - "))}");
 
 
 

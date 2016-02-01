@@ -34,7 +34,7 @@ namespace GrafosLib.Algorithms
             {
                 _distanceTo[i] = double.PositiveInfinity;
             }
-            _priorityQueue = new MinPriorityQueue<double>(graph.VerticesCount);
+            _priorityQueue = new MinPriorityQueue<double>(graph.VerticesCount+1);
 
             _graph = graph;
         }
