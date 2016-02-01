@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using GrafosLib.DataStructure;
 
 namespace GrafosLib.Model
@@ -38,6 +39,11 @@ namespace GrafosLib.Model
         public IEnumerable<int> Vertices()
         {
             return _vertices.Keys;
+        }
+
+        public IDictionary<int, int> Degrees()
+        {
+            return _vertices.ToDictionary(vertex => vertex.Key, vertex => vertex.Value.Count());
         }
     }
 }

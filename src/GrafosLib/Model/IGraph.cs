@@ -12,5 +12,6 @@ namespace GrafosLib.Model
         IEnumerable<Edge> Edges();
         IEnumerable<Edge> Neighbours(int vertex);
         IEnumerable<int> Vertices();
+        IDictionary<int, int> Degrees();
     }
 }

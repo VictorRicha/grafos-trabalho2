@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using GrafosLib.Algorithms;
 using GrafosLib.Model;
 
@@ -13,8 +15,11 @@ namespace GrafosLib
             try
             {
                 //     TextReader fin = new StreamReader( args[0] );
-                TextReader fin = new StreamReader("c:\\Grafos\\tinyEWD.txt");
-
+                Console.WriteLine("Choose file");
+                var file = Console.ReadLine();
+                //TextReader fin = new StreamReader($"c:\\Grafos\\grafo_{file}.txt");
+                TextReader fin = new StreamReader($"c:\\Grafos\\rede_colaboracao.txt");
+                Console.WriteLine($"Reading file {file}...");
                 var counter = 1;
                 string line;
                 while ((line = fin.ReadLine()) != null)
@@ -50,44 +55,68 @@ namespace GrafosLib
             Console.WriteLine("File read...");
             Console.WriteLine(g.VerticesCount + " vertices");
 
-            // run dijkstra
-            Console.WriteLine("Run Dijkstra");
-            var d = new Dijkstra(g);
-            d.Run(0);
-            Console.WriteLine("End");
-            foreach (var vertex in g.Vertices())
-            {
-                if(!double.IsPositiveInfinity(d.DistanceTo(vertex)))
-                    Console.WriteLine($"distance to vertex {vertex} is {d.DistanceTo(vertex)}");
-            }
+            var sw = new Stopwatch();
 
-            Console.WriteLine("path to vertex 1:");
-            var path = d.PathTo(6);
-            if (path == null)
-            {
-                Console.WriteLine("there's no path");
-            }
-            else
-            {
-                foreach (var edge in path)
-                {
-                    Console.WriteLine(edge);
-                }
-            }
+            sw.Start();
+
+            // run dijkstra
+            //Console.WriteLine("Run Dijkstra");
+
+            //var d = new Dijkstra(g);
+            //d.Run(10);
+
+            //sw.Stop();
+            //Console.WriteLine("End");
+            //Console.WriteLine($"Distance to vertex 1: {d.DistanceTo(1)}");
+
+            //Console.WriteLine("Run Prim");
+            //var p = new Prim(g);
+            //sw.Stop();
+
+            //Console.WriteLine($"MST weight: {p.Weight()}");
+
+            //var d = new Dijkstra(g);
+            //d.Run(2722);
+
+            //sw.Stop();
+            //Console.WriteLine("End");
+            //Console.WriteLine($"Distance to turing: {d.DistanceTo(11365)}");
+            //Console.WriteLine($"Distance to kruskal: {d.DistanceTo(211706)}");
+            //Console.WriteLine($"Distance to kleinberg: {d.DistanceTo(264337)}");
+            //Console.WriteLine($"Distance to tardos: {d.DistanceTo(11386)}");
+            //Console.WriteLine($"Distance to daniel: {d.DistanceTo(343930)}");
+
+            //var pathToDaniel = d.PathTo(343930);
+            //foreach (var edge in pathToDaniel)
+            //{
+            //    Console.WriteLine(edge);
+            //}
 
             Console.WriteLine("Run Prim");
             var p = new Prim(g);
+            sw.Stop();
 
             Console.WriteLine($"MST weight: {p.Weight()}");
-
-            var mst = p.Edges();
-
-            Console.WriteLine("MST:");
-            foreach (var edge in mst)
+            var mstEdges = p.Edges();
+            var mst = new AdjacencyListGraph(true);
+            foreach (var mstEdge in mstEdges)
             {
-                Console.WriteLine(edge);
+                mst.AddEdge(mstEdge.Source, mstEdge.Target, mstEdge.Weight);
             }
+            var degrees = mst.Degrees();
+            var d = degrees.Values.OrderByDescending(a => a).ToList();
+            Console.WriteLine($"Degree 1: {d[0]}");
+            Console.WriteLine($"Degree 2: {d[1]}");
+            Console.WriteLine($"Degree 3: {d[2]}");
 
+            Console.WriteLine(
+                $"Dijkstra neighbours: {mst.Neighbours(2722).Aggregate("", (current, neighbour) => current + (neighbour + " - "))}");
+            Console.WriteLine(
+                $"Figueiredo neighbours: {mst.Neighbours(343930).Aggregate("", (current, neighbour) => current + (neighbour + " - "))}");
+
+
+
+            Console.WriteLine("Elapsed={0}", sw.Elapsed.Milliseconds);
             Console.ReadLine();
         }
     }
