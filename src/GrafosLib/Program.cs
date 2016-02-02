@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using GrafosLib.Algorithms;
@@ -17,8 +18,8 @@ namespace GrafosLib
                 //     TextReader fin = new StreamReader( args[0] );
                 Console.WriteLine("Choose file");
                 var file = Console.ReadLine();
-                TextReader fin = new StreamReader($"c:\\Grafos\\grafo_{file}.txt");
-                //TextReader fin = new StreamReader($"c:\\Grafos\\rede_colaboracao.txt");
+                //TextReader fin = new StreamReader($"c:\\Grafos\\grafo_{file}.txt");
+                TextReader fin = new StreamReader($"c:\\Grafos\\rede_colaboracao.txt");
                 Console.WriteLine($"Reading file {file}...");
                 var counter = 1;
                 string line;
@@ -41,7 +42,8 @@ namespace GrafosLib
                             }
                             var source = int.Parse(st[0]);
                             var dest = int.Parse(st[1]);
-                            var cost = double.Parse(st[2]);
+                            CultureInfo culture = new CultureInfo("en");
+                            var cost = double.Parse(st[2], culture);
                             g.AddEdge(source, dest, cost);
                         }
                     }
@@ -63,7 +65,7 @@ namespace GrafosLib
             //Console.WriteLine("Run Dijkstra");
 
             //var d = new Dijkstra(g);
-            //d.Run(10);
+            //d.Run(40);
 
             //sw.Stop();
             //Console.WriteLine("End");
@@ -75,29 +77,35 @@ namespace GrafosLib
 
             //Console.WriteLine($"MST weight: {p.Weight()}");
 
+            //Console.WriteLine("Calc " + DateTime.Now.ToString("O"));
+            //var avg = new AveragePathLength(g).Run();
+            //Console.WriteLine("Average Path Length: {0}", avg);
+            //sw.Stop();
+            //Console.WriteLine("Done " + DateTime.Now.ToString("O"));
 
-            var avg = new AveragePathLength(g).Run();
-            Console.WriteLine("Average Path Length: {0}", avg);
-            sw.Stop();
 
-
-
-            //var d = new Dijkstra(g);
-            //d.Run(2722);
+            var d = new Dijkstra(g);
+            d.Run(2722);
 
             //sw.Stop();
             //Console.WriteLine("End");
             //Console.WriteLine($"Distance to turing: {d.DistanceTo(11365)}");
             //Console.WriteLine($"Distance to kruskal: {d.DistanceTo(211706)}");
-            //Console.WriteLine($"Distance to kleinberg: {d.DistanceTo(264337)}");
+            //Console.WriteLine($"Distance to kleinberg: {d.DistanceTo(5709)}");
             //Console.WriteLine($"Distance to tardos: {d.DistanceTo(11386)}");
             //Console.WriteLine($"Distance to daniel: {d.DistanceTo(343930)}");
 
-            //var pathToDaniel = d.PathTo(343930);
-            //foreach (var edge in pathToDaniel)
-            //{
-            //    Console.WriteLine(edge);
-            //}
+
+            var pathToDaniel = d.PathTo(11386);
+            if (pathToDaniel == null)
+            {
+                Console.WriteLine("indefinito");
+                return;
+            }
+            foreach (var edge in pathToDaniel)
+            {
+                Console.WriteLine(edge);
+            }
 
             //Console.WriteLine("Run Prim");
             //var p = new Prim(g);
@@ -110,11 +118,16 @@ namespace GrafosLib
             //{
             //    mst.AddEdge(mstEdge.Source, mstEdge.Target, mstEdge.Weight);
             //}
+
+
             //var degrees = mst.Degrees();
             //var d = degrees.Values.OrderByDescending(a => a).ToList();
-            //Console.WriteLine($"Degree 1: {d[0]}");
-            //Console.WriteLine($"Degree 2: {d[1]}");
-            //Console.WriteLine($"Degree 3: {d[2]}");
+            //var first = degrees.Where(e => e.Value == d[0]);
+            //var second = degrees.Where(e => e.Value == d[1]);
+            //var third = degrees.Where(e => e.Value == d[2]);
+            //Console.WriteLine($"Degree 1: {first.FirstOrDefault().Key}  {d[0]}");
+            //Console.WriteLine($"Degree 2: {second.FirstOrDefault().Key} {d[1]}");
+            //Console.WriteLine($"Degree 3: {third.FirstOrDefault().Key} {d[2]}");
 
             //Console.WriteLine(
             //    $"Dijkstra neighbours: {mst.Neighbours(2722).Aggregate("", (current, neighbour) => current + (neighbour + " - "))}");
@@ -123,7 +136,7 @@ namespace GrafosLib
 
 
 
-            Console.WriteLine("Elapsed={0}", sw.Elapsed.Milliseconds);
+            Console.WriteLine("Elapsed={0}", sw.Elapsed.TotalMilliseconds);
             Console.ReadLine();
         }
     }

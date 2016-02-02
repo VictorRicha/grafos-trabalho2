@@ -44,8 +44,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algorithms\AveragePathLength.cs" />
+    <Compile Include="Algorithms\DepthFirstSearchAlgorithm.cs" />
     <Compile Include="Algorithms\Dijkstra.cs" />
     <Compile Include="Algorithms\Prim.cs" />
+    <Compile Include="DataStructure\BitMatrix.cs" />
+    <Compile Include="Algorithms\BreadthFirstSearchAlgorithm.cs" />
     <Compile Include="DataStructure\DictionaryOfCollection.cs" />
     <Compile Include="DataStructure\MinPriorityQueue.cs" />
     <Compile Include="Model\AdjacencyListGraph.cs" />
