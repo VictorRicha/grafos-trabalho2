@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algorithms\AveragePathLength.cs" />
+    <Compile Include="Algorithms\ColoringAlgorithm.cs" />
     <Compile Include="Algorithms\DepthFirstSearchAlgorithm.cs" />
     <Compile Include="Algorithms\Dijkstra.cs" />
     <Compile Include="Algorithms\Prim.cs" />
